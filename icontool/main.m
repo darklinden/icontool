@@ -34,7 +34,7 @@ BOOL CGImageWriteToFile(CGImageRef image, NSString *path) {
     return YES;
 }
 
-void saveIOSImg(CGImageRef imageRef, int size, NSString* prefix, NSString* folderPath)
+void saveIOSImg(CGImageRef imageRef, CGImageRef subscriptImgRef, int size, NSString* prefix, NSString* folderPath)
 {
     printf("saveIOSImg: %d \n", size);
     //get src size
@@ -65,6 +65,9 @@ void saveIOSImg(CGImageRef imageRef, int size, NSString* prefix, NSString* folde
     
     CGRect destTile = CGRectMake(0.f, 0.f, desSize.width, desSize.height);
     CGContextDrawImage(destContext, destTile, imageRef);
+    if (subscriptImgRef) {
+        CGContextDrawImage(destContext, destTile, subscriptImgRef);
+    }
     
     CGImageRef destImage = CGBitmapContextCreateImage(destContext);
     CGContextRelease(destContext);
@@ -72,7 +75,7 @@ void saveIOSImg(CGImageRef imageRef, int size, NSString* prefix, NSString* folde
     CGImageRelease(destImage);
 }
 
-void saveAndroidImg(CGImageRef imageRef, int size, NSString* name, NSString* folderPath)
+void saveAndroidImg(CGImageRef imageRef, CGImageRef subscriptImgRef, int size, NSString* name, NSString* folderPath)
 {
     printf("saveAndroidImg: %d \n", size);
     //get src size
@@ -106,6 +109,9 @@ void saveAndroidImg(CGImageRef imageRef, int size, NSString* name, NSString* fol
     
     CGRect destTile = CGRectMake(0.f, 0.f, desSize.width, desSize.height);
     CGContextDrawImage(destContext, destTile, imageRef);
+    if (subscriptImgRef) {
+        CGContextDrawImage(destContext, destTile, subscriptImgRef);
+    }
     
     CGImageRef destImage = CGBitmapContextCreateImage(destContext);
     CGContextRelease(destContext);
@@ -116,21 +122,33 @@ void saveAndroidImg(CGImageRef imageRef, int size, NSString* name, NSString* fol
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
-        if (argc == 2) {
-//            NSString *appPath = [NSString stringWithUTF8String:argv[0]];
+        if (2 <= argc) {
             NSString *filePath = [NSString stringWithUTF8String:argv[1]];
+            NSString *subscriptPath = @"";
+            if (2 < argc) {
+                subscriptPath = [NSString stringWithUTF8String:argv[2]];
+            }
             
-            printf("filePath: %s\n", filePath.UTF8String);
+            printf("filePath: %s\n subscriptPath%s \n", filePath.UTF8String, subscriptPath.UTF8String);
             
             NSFileManager *mgr = [NSFileManager defaultManager];
             
             CGImageRef srcImgRef = NULL;
+            CGImageRef subscriptImgRef = NULL;
             if ([mgr fileExistsAtPath:filePath]) {
                 //get cgimage
                 NSData *imageData = [[NSData alloc] initWithContentsOfFile:filePath];
                 CGImageSourceRef imageSource = CGImageSourceCreateWithData((__bridge CFDataRef)imageData, NULL);
                 
                 srcImgRef = CGImageSourceCreateImageAtIndex(imageSource, 0, NULL);
+                
+                if ([mgr fileExistsAtPath:subscriptPath]) {
+                    //get cgimage
+                    NSData *imageData = [[NSData alloc] initWithContentsOfFile:subscriptPath];
+                    CGImageSourceRef imageSource = CGImageSourceCreateWithData((__bridge CFDataRef)imageData, NULL);
+                    
+                    subscriptImgRef = CGImageSourceCreateImageAtIndex(imageSource, 0, NULL);
+                }
             }
             
             if (!srcImgRef) {
@@ -151,13 +169,18 @@ int main(int argc, const char * argv[]) {
             for (NSNumber *n in ALL_IOS_SIZE) {
                 int s = n.intValue;
                 saveIOSImg(srcImgRef,
+                           subscriptImgRef,
                            s,
                            @"Icon",
                            folderPath);
             }
             
+            [mgr copyItemAtPath:[folderPath stringByAppendingPathComponent:@"Icon-57.png"] toPath:[folderPath stringByAppendingPathComponent:@"Icon.png"] error:nil];
+            [mgr copyItemAtPath:[folderPath stringByAppendingPathComponent:@"Icon-114.png"] toPath:[folderPath stringByAppendingPathComponent:@"Icon@2x.png"] error:nil];
+            
             for (int i = 0; i < ALL_ANDROID_FOLDER.count; i++) {
                 saveAndroidImg(srcImgRef,
+                               subscriptImgRef,
                                [ALL_ANDROID_SIZE[i] intValue],
                                @"icon.png",
                                [folderPath stringByAppendingPathComponent:ALL_ANDROID_FOLDER[i]]);
@@ -167,8 +190,9 @@ int main(int argc, const char * argv[]) {
         }
         else {
             printf("\n**************************************\n");
-            printf("Please use \"icontool file-path\" to generate icons.");
-            printf("\n**************************************\n");
+            printf("Please use \"icontool file-path\" to generate icons.\n");
+            printf("Please use \"icontool file-path subscript-path\" to generate icons with subscripts.");
+            printf("\n**************************************\n\n");
         }
     }
     return 0;

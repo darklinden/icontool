@@ -72,6 +72,7 @@
 				2C1A547D1AE0BBDC00A7A7D7 /* Sources */,
 				2C1A547E1AE0BBDC00A7A7D7 /* Frameworks */,
 				2C1A547F1AE0BBDC00A7A7D7 /* CopyFiles */,
+				2C14A2171B4CAA0D00ADFB8C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -112,6 +113,22 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2C14A2171B4CAA0D00ADFB8C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf /usr/local/bin/icontool\n\ncp ${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/icontool /usr/local/bin";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2C1A547D1AE0BBDC00A7A7D7 /* Sources */ = {
@@ -235,6 +252,7 @@
 				2C1A548A1AE0BBDC00A7A7D7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
