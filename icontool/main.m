@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
 
-#define ALL_IOS_SIZE @[@(29),@(40),@(50),@(57),@(58),@(72),@(76),@(80),@(100),@(108),@(114),@(120),@(124),@(144),@(152)]
+#define ALL_IOS_SIZE @[@(29),@(40),@(50),@(57),@(58),@(72),@(76),@(80),@(87),@(100),@(108),@(114),@(120),@(124),@(144),@(152),@(180)]
 
-#define ALL_ANDROID_FOLDER @[@"drawable-hdpi", @"drawable-ldpi", @"drawable-mdpi", @"drawable-xhdpi"]
-#define ALL_ANDROID_SIZE   @[@(72),            @(32),            @(48),            @(256)]
+#define ALL_ANDROID_FOLDER @[@"drawable-hdpi", @"drawable-ldpi", @"drawable-mdpi", @"drawable-xhdpi", @"drawable-xxhdpi"]
+#define ALL_ANDROID_SIZE   @[@(72), @(32), @(48), @(256), @(512)]
 
 BOOL CGImageWriteToFile(CGImageRef image, NSString *path) {
     CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:path];
