@@ -9,7 +9,101 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/AppKit.h>
 
-#define ALL_IOS_SIZE @[@(29),@(40),@(50),@(57),@(58),@(72),@(76),@(80),@(87),@(100),@(108),@(114),@(120),@(124),@(144),@(152),@(180)]
+#define IMAGE_ASSETS    @"Images.xcassets"
+#define ICON_ASSETS     @"AppIcon.appiconset"
+#define LAUNCH_ASSETS   @"Brand Assets.launchimage"
+#define JSON_NAME       @"Contents.json"
+
+#define ICON_JSON       \
+@"{\n\
+    \"images\" : \n\
+        [\n\
+            {\n\
+                \"size\" : \"29x29\",\n\
+                \"idiom\" : \"iphone\",\n\
+                \"filename\" : \"Icon-58.png\",\n\
+                \"scale\" : \"2x\"\n\
+            },\n\
+            {\n\
+                \"size\" : \"29x29\",\n\
+                \"idiom\" : \"iphone\",\n\
+                \"filename\" : \"Icon-87.png\",\n\
+                \"scale\" : \"3x\"\n\
+            },\n\
+            {\n\
+                \"size\" : \"40x40\",\n\
+                \"idiom\" : \"iphone\",\n\
+                \"filename\" : \"Icon-80.png\",\n\
+                \"scale\" : \"2x\"\n\
+            },\n\
+            {\n\
+                \"size\" : \"40x40\",\n\
+                \"idiom\" : \"iphone\",\n\
+                \"filename\" : \"Icon-120.png\",\n\
+                \"scale\" : \"3x\"\n\
+            },\n\
+            {\n\
+                \"size\" : \"60x60\",\n\
+                \"idiom\" : \"iphone\",\n\
+                \"filename\" : \"Icon-120.png\",\n\
+                \"scale\" : \"2x\"\n\
+            },\n\
+            {\n\
+                \"size\" : \"60x60\",\n\
+                \"idiom\" : \"iphone\",\n\
+                \"filename\" : \"Icon-180.png\",\n\
+                \"scale\" : \"3x\"\n\
+            },\n\
+            {\n\
+                \"size\" : \"29x29\",\n\
+                \"idiom\" : \"ipad\",\n\
+                \"filename\" : \"Icon-29.png\",\n\
+                \"scale\" : \"1x\"\n\
+            },\n\
+            {\n\
+                \"size\" : \"29x29\",\n\
+                \"idiom\" : \"ipad\",\n\
+                \"filename\" : \"Icon-58.png\",\n\
+                \"scale\" : \"2x\"\n\
+            },\n\
+            {\n\
+                \"size\" : \"40x40\",\n\
+                \"idiom\" : \"ipad\",\n\
+                \"filename\" : \"Icon-40.png\",\n\
+                \"scale\" : \"1x\"\n\
+            },\n\
+            {\n\
+                \"size\" : \"40x40\",\n\
+                \"idiom\" : \"ipad\",\n\
+                \"filename\" : \"Icon-80.png\",\n\
+                \"scale\" : \"2x\"\n\
+            },\n\
+            {\n\
+                \"size\" : \"76x76\",\n\
+                \"idiom\" : \"ipad\",\n\
+                \"filename\" : \"Icon-76.png\",\n\
+                \"scale\" : \"1x\"\n\
+            },\n\
+            {\n\
+                \"size\" : \"76x76\",\n\
+                \"idiom\" : \"ipad\",\n\
+                \"filename\" : \"Icon-152.png\",\n\
+                \"scale\" : \"2x\"\n\
+            },\n\
+            {\n\
+                \"size\" : \"83.5x83.5\",\n\
+                \"idiom\" : \"ipad\",\n\
+                \"filename\" : \"Icon-167.png\",\n\
+                \"scale\" : \"2x\"\n\
+            }\n\
+        ],\n\
+    \"info\" : {\n\
+        \"version\" : 1,\n\
+        \"author\" : \"xcode\"\n\
+    }\n\
+}"
+
+#define ALL_IOS_SIZE @[@(29),@(40),@(58),@(76),@(80),@(87),@(120),@(152),@(167),@(180)]
 
 #define ALL_ANDROID_FOLDER @[@"drawable-hdpi", @"drawable-ldpi", @"drawable-mdpi", @"drawable-xhdpi", @"drawable-xxhdpi"]
 #define ALL_ANDROID_SIZE   @[@(72), @(32), @(48), @(256), @(512)]
@@ -160,11 +254,28 @@ int main(int argc, const char * argv[]) {
             
             [mgr removeItemAtPath:folderPath error:nil];
             
-            [mgr createDirectoryAtPath:[filePath stringByDeletingPathExtension]
+            [mgr createDirectoryAtPath:folderPath
            withIntermediateDirectories:YES
                             attributes:nil
                                  error:nil];
             
+            
+            [mgr createDirectoryAtPath:[folderPath stringByAppendingPathComponent:IMAGE_ASSETS]
+           withIntermediateDirectories:YES
+                            attributes:nil
+                                 error:nil];
+            
+            [mgr createDirectoryAtPath:[[folderPath stringByAppendingPathComponent:IMAGE_ASSETS] stringByAppendingPathComponent:ICON_ASSETS]
+           withIntermediateDirectories:YES
+                            attributes:nil
+                                 error:nil];
+            
+            [mgr createDirectoryAtPath:[[folderPath stringByAppendingPathComponent:IMAGE_ASSETS] stringByAppendingPathComponent:LAUNCH_ASSETS]
+           withIntermediateDirectories:YES
+                            attributes:nil
+                                 error:nil];
+            
+            [[ICON_JSON dataUsingEncoding:NSUTF8StringEncoding] writeToFile:[[[folderPath stringByAppendingPathComponent:IMAGE_ASSETS] stringByAppendingPathComponent:ICON_ASSETS] stringByAppendingPathComponent:JSON_NAME] atomically:YES];
             
             for (NSNumber *n in ALL_IOS_SIZE) {
                 int s = n.intValue;
@@ -172,11 +283,8 @@ int main(int argc, const char * argv[]) {
                            subscriptImgRef,
                            s,
                            @"Icon",
-                           folderPath);
+                           [[folderPath stringByAppendingPathComponent:IMAGE_ASSETS] stringByAppendingPathComponent:ICON_ASSETS]);
             }
-            
-            [mgr copyItemAtPath:[folderPath stringByAppendingPathComponent:@"Icon-57.png"] toPath:[folderPath stringByAppendingPathComponent:@"Icon.png"] error:nil];
-            [mgr copyItemAtPath:[folderPath stringByAppendingPathComponent:@"Icon-114.png"] toPath:[folderPath stringByAppendingPathComponent:@"Icon@2x.png"] error:nil];
             
             for (int i = 0; i < ALL_ANDROID_FOLDER.count; i++) {
                 saveAndroidImg(srcImgRef,
