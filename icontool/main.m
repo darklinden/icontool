@@ -16,94 +16,117 @@
 
 #define ICON_JSON       \
 @"{\n\
-    \"images\" : \n\
-        [\n\
-            {\n\
-                \"size\" : \"29x29\",\n\
-                \"idiom\" : \"iphone\",\n\
-                \"filename\" : \"Icon-58.png\",\n\
-                \"scale\" : \"2x\"\n\
-            },\n\
-            {\n\
-                \"size\" : \"29x29\",\n\
-                \"idiom\" : \"iphone\",\n\
-                \"filename\" : \"Icon-87.png\",\n\
-                \"scale\" : \"3x\"\n\
-            },\n\
-            {\n\
-                \"size\" : \"40x40\",\n\
-                \"idiom\" : \"iphone\",\n\
-                \"filename\" : \"Icon-80.png\",\n\
-                \"scale\" : \"2x\"\n\
-            },\n\
-            {\n\
-                \"size\" : \"40x40\",\n\
-                \"idiom\" : \"iphone\",\n\
-                \"filename\" : \"Icon-120.png\",\n\
-                \"scale\" : \"3x\"\n\
-            },\n\
-            {\n\
-                \"size\" : \"60x60\",\n\
-                \"idiom\" : \"iphone\",\n\
-                \"filename\" : \"Icon-120.png\",\n\
-                \"scale\" : \"2x\"\n\
-            },\n\
-            {\n\
-                \"size\" : \"60x60\",\n\
-                \"idiom\" : \"iphone\",\n\
-                \"filename\" : \"Icon-180.png\",\n\
-                \"scale\" : \"3x\"\n\
-            },\n\
-            {\n\
-                \"size\" : \"29x29\",\n\
-                \"idiom\" : \"ipad\",\n\
-                \"filename\" : \"Icon-29.png\",\n\
-                \"scale\" : \"1x\"\n\
-            },\n\
-            {\n\
-                \"size\" : \"29x29\",\n\
-                \"idiom\" : \"ipad\",\n\
-                \"filename\" : \"Icon-58.png\",\n\
-                \"scale\" : \"2x\"\n\
-            },\n\
-            {\n\
-                \"size\" : \"40x40\",\n\
-                \"idiom\" : \"ipad\",\n\
-                \"filename\" : \"Icon-40.png\",\n\
-                \"scale\" : \"1x\"\n\
-            },\n\
-            {\n\
-                \"size\" : \"40x40\",\n\
-                \"idiom\" : \"ipad\",\n\
-                \"filename\" : \"Icon-80.png\",\n\
-                \"scale\" : \"2x\"\n\
-            },\n\
-            {\n\
-                \"size\" : \"76x76\",\n\
-                \"idiom\" : \"ipad\",\n\
-                \"filename\" : \"Icon-76.png\",\n\
-                \"scale\" : \"1x\"\n\
-            },\n\
-            {\n\
-                \"size\" : \"76x76\",\n\
-                \"idiom\" : \"ipad\",\n\
-                \"filename\" : \"Icon-152.png\",\n\
-                \"scale\" : \"2x\"\n\
-            },\n\
-            {\n\
-                \"size\" : \"83.5x83.5\",\n\
-                \"idiom\" : \"ipad\",\n\
-                \"filename\" : \"Icon-167.png\",\n\
-                \"scale\" : \"2x\"\n\
-            }\n\
-        ],\n\
+    \"images\" : [\n\
+        {\n\
+            \"idiom\" : \"iphone\",\n\
+            \"size\" : \"20x20\",\n\
+            \"filename\" : \"Icon-40.png\",\n\
+            \"scale\" : \"2x\"\n\
+        },\n\
+        {\n\
+            \"idiom\" : \"iphone\",\n\
+            \"size\" : \"20x20\",\n\
+            \"filename\" : \"Icon-60.png\",\n\
+            \"scale\" : \"3x\"\n\
+        },\n\
+        {\n\
+            \"size\" : \"29x29\",\n\
+            \"idiom\" : \"iphone\",\n\
+            \"filename\" : \"Icon-58.png\",\n\
+            \"scale\" : \"2x\"\n\
+        },\n\
+        {\n\
+            \"size\" : \"29x29\",\n\
+            \"idiom\" : \"iphone\",\n\
+            \"filename\" : \"Icon-87.png\",\n\
+            \"scale\" : \"3x\"\n\
+        },\n\
+        {\n\
+            \"size\" : \"40x40\",\n\
+            \"idiom\" : \"iphone\",\n\
+            \"filename\" : \"Icon-80.png\",\n\
+            \"scale\" : \"2x\"\n\
+        },\n\
+        {\n\
+            \"size\" : \"40x40\",\n\
+            \"idiom\" : \"iphone\",\n\
+            \"filename\" : \"Icon-120.png\",\n\
+            \"scale\" : \"3x\"\n\
+        },\n\
+        {\n\
+            \"size\" : \"60x60\",\n\
+            \"idiom\" : \"iphone\",\n\
+            \"filename\" : \"Icon-120.png\",\n\
+            \"scale\" : \"2x\"\n\
+        },\n\
+        {\n\
+            \"size\" : \"60x60\",\n\
+            \"idiom\" : \"iphone\",\n\
+            \"filename\" : \"Icon-180.png\",\n\
+            \"scale\" : \"3x\"\n\
+        },\n\
+        {\n\
+            \"idiom\" : \"ipad\",\n\
+            \"size\" : \"20x20\",\n\
+            \"filename\" : \"Icon-20.png\",\n\
+            \"scale\" : \"1x\"\n\
+        },\n\
+        {\n\
+            \"idiom\" : \"ipad\",\n\
+            \"size\" : \"20x20\",\n\
+            \"filename\" : \"Icon-40.png\",\n\
+            \"scale\" : \"2x\"\n\
+        },\n\
+        {\n\
+            \"size\" : \"29x29\",\n\
+            \"idiom\" : \"ipad\",\n\
+            \"filename\" : \"Icon-29.png\",\n\
+            \"scale\" : \"1x\"\n\
+        },\n\
+        {\n\
+            \"size\" : \"29x29\",\n\
+            \"idiom\" : \"ipad\",\n\
+            \"filename\" : \"Icon-58.png\",\n\
+            \"scale\" : \"2x\"\n\
+        },\n\
+        {\n\
+            \"size\" : \"40x40\",\n\
+            \"idiom\" : \"ipad\",\n\
+            \"filename\" : \"Icon-40.png\",\n\
+            \"scale\" : \"1x\"\n\
+        },\n\
+        {\n\
+            \"size\" : \"40x40\",\n\
+            \"idiom\" : \"ipad\",\n\
+            \"filename\" : \"Icon-80.png\",\n\
+            \"scale\" : \"2x\"\n\
+        },\n\
+        {\n\
+            \"size\" : \"76x76\",\n\
+            \"idiom\" : \"ipad\",\n\
+            \"filename\" : \"Icon-76.png\",\n\
+            \"scale\" : \"1x\"\n\
+        },\n\
+        {\n\
+            \"size\" : \"76x76\",\n\
+            \"idiom\" : \"ipad\",\n\
+            \"filename\" : \"Icon-152.png\",\n\
+            \"scale\" : \"2x\"\n\
+        },\n\
+        {\n\
+            \"size\" : \"83.5x83.5\",\n\
+            \"idiom\" : \"ipad\",\n\
+            \"filename\" : \"Icon-167.png\",\n\
+            \"scale\" : \"2x\"\n\
+        }\n\
+    ],\n\
     \"info\" : {\n\
         \"version\" : 1,\n\
         \"author\" : \"xcode\"\n\
     }\n\
 }"
 
-#define ALL_IOS_SIZE @[@(29),@(40),@(58),@(76),@(80),@(87),@(120),@(152),@(167),@(180)]
+#define ALL_IOS_SIZE @[@(20),@(29),@(40),@(58),@(60),@(76),@(80),@(87),@(120),@(152),@(167),@(180)]
 
 #define ALL_ANDROID_FOLDER @[@"drawable-hdpi", @"drawable-ldpi", @"drawable-mdpi", @"drawable-xhdpi", @"drawable-xxhdpi"]
 #define ALL_ANDROID_SIZE   @[@(72), @(32), @(48), @(256), @(512)]
