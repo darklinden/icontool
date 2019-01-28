@@ -126,10 +126,12 @@
     }\n\
 }"
 
-#define ALL_IOS_SIZE @[@(20),@(29),@(40),@(58),@(60),@(76),@(80),@(87),@(120),@(152),@(167),@(180)]
 
-#define ALL_ANDROID_FOLDER @[@"drawable-hdpi", @"drawable-ldpi", @"drawable-mdpi", @"drawable-xhdpi", @"drawable-xxhdpi"]
-#define ALL_ANDROID_SIZE   @[@(72), @(32), @(48), @(256), @(512)]
+
+#define ALL_IOS_SIZE @[@"20", @"20@2x", @"20@3x", @"29", @"29@2x", @"29@3x", @"40", @"40@2x", @"40@3x", @"50", @"50@2x", @"57", @"57@2x", @"60@2x", @"60@3x", @"72", @"72@2x", @"76", @"76@2x", @"83.5@2x"]
+
+#define ALL_ANDROID_FOLDER @[@"drawable-hdpi", @"drawable-ldpi", @"drawable-mdpi", @"drawable-xhdpi", @"drawable-xxhdpi", @"mipmap-xxxhdpi"]
+#define ALL_ANDROID_SIZE   @[@(72), @(32), @(48), @(96), @(144), @(512)]
 
 BOOL CGImageWriteToFile(CGImageRef image, NSString *path) {
     CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:path];
@@ -151,7 +153,7 @@ BOOL CGImageWriteToFile(CGImageRef image, NSString *path) {
     return YES;
 }
 
-void saveIOSImg(CGImageRef imageRef, CGImageRef subscriptImgRef, int size, NSString* prefix, NSString* folderPath)
+void saveIOSImg(CGImageRef imageRef, CGImageRef subscriptImgRef, int size, NSString* name, NSString* folderPath)
 {
     printf("saveIOSImg: %d \n", size);
     //get src size
@@ -161,7 +163,7 @@ void saveIOSImg(CGImageRef imageRef, CGImageRef subscriptImgRef, int size, NSStr
     
     NSSize desSize = NSMakeSize(size, size);
     
-    NSString *desPath = [[[folderPath stringByAppendingPathComponent:prefix] stringByAppendingFormat:@"-%d", (int)desSize.width] stringByAppendingPathExtension:@"png"];
+    NSString *desPath = [folderPath stringByAppendingPathComponent:name];
     [[NSFileManager defaultManager] removeItemAtPath:desPath error:nil];
     
     //create des bit map
@@ -300,12 +302,25 @@ int main(int argc, const char * argv[]) {
             
             [[ICON_JSON dataUsingEncoding:NSUTF8StringEncoding] writeToFile:[[[folderPath stringByAppendingPathComponent:IMAGE_ASSETS] stringByAppendingPathComponent:ICON_ASSETS] stringByAppendingPathComponent:JSON_NAME] atomically:YES];
             
-            for (NSNumber *n in ALL_IOS_SIZE) {
-                int s = n.intValue;
+            for (NSString *n in ALL_IOS_SIZE) {
+                NSRange idx = [n rangeOfString:@"@"];
+                float s = 0;
+                if (idx.location != NSNotFound) {
+                    NSString* left = [n substringToIndex: idx.location];
+                    NSString* right = [n substringFromIndex:idx.location + idx.length];
+                    right = [right stringByReplacingOccurrencesOfString:@"x" withString:@""];
+                    float l = left.floatValue;
+                    float r = right.length? right.floatValue:1;
+                    s = l * r;
+                }
+                else {
+                    s = n.floatValue;
+                }
+                
                 saveIOSImg(srcImgRef,
                            subscriptImgRef,
-                           s,
-                           @"Icon",
+                           (int)floorf(s),
+                           [[@"Icon-" stringByAppendingString:n] stringByAppendingPathExtension:@"png"],
                            [[folderPath stringByAppendingPathComponent:IMAGE_ASSETS] stringByAppendingPathComponent:ICON_ASSETS]);
             }
             
@@ -313,7 +328,7 @@ int main(int argc, const char * argv[]) {
                 saveAndroidImg(srcImgRef,
                                subscriptImgRef,
                                [ALL_ANDROID_SIZE[i] intValue],
-                               @"icon.png",
+                               @"ic_launcher.png",
                                [folderPath stringByAppendingPathComponent:ALL_ANDROID_FOLDER[i]]);
             }
             
