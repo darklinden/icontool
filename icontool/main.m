@@ -130,7 +130,7 @@
 
 #define ALL_IOS_SIZE @[@"20", @"20@2x", @"20@3x", @"29", @"29@2x", @"29@3x", @"40", @"40@2x", @"40@3x", @"50", @"50@2x", @"57", @"57@2x", @"60@2x", @"60@3x", @"72", @"72@2x", @"76", @"76@2x", @"83.5@2x"]
 
-#define ALL_ANDROID_FOLDER @[@"drawable-hdpi", @"drawable-ldpi", @"drawable-mdpi", @"drawable-xhdpi", @"drawable-xxhdpi", @"mipmap-xxxhdpi"]
+#define ALL_ANDROID_FOLDER @[@"mipmap-hdpi", @"mipmap-ldpi", @"mipmap-mdpi", @"mipmap-xhdpi", @"mipmap-xxhdpi", @"mipmap-xxxhdpi"]
 #define ALL_ANDROID_SIZE   @[@(72), @(32), @(48), @(96), @(144), @(512)]
 
 BOOL CGImageWriteToFile(CGImageRef image, NSString *path) {
