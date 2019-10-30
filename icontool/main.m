@@ -118,6 +118,12 @@
             \"idiom\" : \"ipad\",\n\
             \"filename\" : \"Icon-167.png\",\n\
             \"scale\" : \"2x\"\n\
+        },\n\
+        {\n\
+            \"size\" : \"1024x1024\",\n\
+            \"idiom\" : \"ios-marketing\",\n\
+            \"filename\" : \"Icon-1024.png\",\n\
+            \"scale\" : \"1x\"\n\
         }\n\
     ],\n\
     \"info\" : {\n\
@@ -126,12 +132,8 @@
     }\n\
 }"
 
-
-
-#define ALL_IOS_SIZE @[@"20", @"20@2x", @"20@3x", @"29", @"29@2x", @"29@3x", @"40", @"40@2x", @"40@3x", @"50", @"50@2x", @"57", @"57@2x", @"60@2x", @"60@3x", @"72", @"72@2x", @"76", @"76@2x", @"83.5@2x"]
-
-#define ALL_ANDROID_FOLDER @[@"mipmap-hdpi", @"mipmap-ldpi", @"mipmap-mdpi", @"mipmap-xhdpi", @"mipmap-xxhdpi", @"mipmap-xxxhdpi"]
-#define ALL_ANDROID_SIZE   @[@(72), @(32), @(48), @(96), @(144), @(512)]
+#define ALL_ANDROID_FOLDER @[@"mipmap-hdpi", @"mipmap-mdpi", @"mipmap-xhdpi", @"mipmap-xxhdpi", @"mipmap-xxxhdpi"]
+#define ALL_ANDROID_SIZE   @[@(72), @(48), @(96), @(144), @(512)]
 
 BOOL CGImageWriteToFile(CGImageRef image, NSString *path) {
     CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:path];
@@ -302,25 +304,27 @@ int main(int argc, const char * argv[]) {
             
             [[ICON_JSON dataUsingEncoding:NSUTF8StringEncoding] writeToFile:[[[folderPath stringByAppendingPathComponent:IMAGE_ASSETS] stringByAppendingPathComponent:ICON_ASSETS] stringByAppendingPathComponent:JSON_NAME] atomically:YES];
             
-            for (NSString *n in ALL_IOS_SIZE) {
-                NSRange idx = [n rangeOfString:@"@"];
+            NSError *err = nil;
+            id obj = [NSJSONSerialization JSONObjectWithData:[ICON_JSON dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableLeaves error:&err];
+//            NSLog(@"%@ %@", err, obj);
+            
+            NSArray *images = obj[@"images"];
+            
+            for (NSDictionary *obj in images) {
+                NSString *size = obj[@"size"];
+                NSString *scale = obj[@"scale"];
+                NSString* left =  [size componentsSeparatedByString:@"x"][0];
+                NSString* right = [scale stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"x"]];
+                
                 float s = 0;
-                if (idx.location != NSNotFound) {
-                    NSString* left = [n substringToIndex: idx.location];
-                    NSString* right = [n substringFromIndex:idx.location + idx.length];
-                    right = [right stringByReplacingOccurrencesOfString:@"x" withString:@""];
-                    float l = left.floatValue;
-                    float r = right.length? right.floatValue:1;
-                    s = l * r;
-                }
-                else {
-                    s = n.floatValue;
-                }
+                float l = left.floatValue;
+                float r = right.length? right.floatValue:1;
+                s = l * r;
                 
                 saveIOSImg(srcImgRef,
                            subscriptImgRef,
                            (int)floorf(s),
-                           [[@"Icon-" stringByAppendingString:n] stringByAppendingPathExtension:@"png"],
+                           obj[@"filename"],
                            [[folderPath stringByAppendingPathComponent:IMAGE_ASSETS] stringByAppendingPathComponent:ICON_ASSETS]);
             }
             
